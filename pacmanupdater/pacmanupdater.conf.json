@@ -1,0 +1,13 @@
+{
+    "excludes": [
+        "My-super-package"
+    ],
+    "packages": {
+        "My-super-package": {
+            "packagetype": "aur",
+            "source": "https://aur.archlinux.org/my-super-package.git",
+            "localfolder": "super-package"
+        }
+    }
+}
+

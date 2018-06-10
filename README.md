@@ -1,0 +1,4 @@
+Dependencies:
+
+ - git
+ - python3
