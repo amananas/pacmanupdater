@@ -14,8 +14,6 @@ def configure(config, includes=None, excludes=None, configDebug=False):
     """
     global _configuration
     logger.configLogging(configDebug)
-    if includes and excludes:
-        raise Exception('You cannot include and exclude packages here, it means nothing.');
     if includes:
         _configuration = {}
         for packageName in includes:
