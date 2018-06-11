@@ -9,6 +9,8 @@ class AURPackage(package.Package):
     def __init__(self, **kwargs):
         package.Package.__init__(self, **kwargs)
         self._localFolder = kwargs['localfolder']
+        self._pacmanBuildOptions = kwargs['pacmanbuildoptions'] if 'pacmanbuildoptions' in kwargs else []
+        self._pacmanInstallOptions = kwargs['pacmaninstalloptions'] if 'pacmaninstalloptions' in kwargs else []
 
     def _isAvailable(self):
         return git.repoExists(self._source)
@@ -33,7 +35,7 @@ class AURPackage(package.Package):
     def applyPackage(self):
         repo = git.Repo(self._source, self._localFolder)
         repo.get()
-        repo.popenInRepo(self._buildCallback, args=['makepkg', '-sr', '--noconfirm'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=True)
-        repo.popenInRepo(self._installCallback, args=['makepkg', '-i', '--noconfirm'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=True)
+        repo.popenInRepo(self._buildCallback, args=['makepkg', '-sr', '--noconfirm'] + self._pacmanBuildOptions, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=True)
+        repo.popenInRepo(self._installCallback, args=['makepkg', '-i', '--noconfirm'] + self._pacmanInstallOptions, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, close_fds=True)
         repo.clean()
 
